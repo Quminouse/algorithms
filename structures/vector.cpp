@@ -17,6 +17,8 @@ public:
   Vector();
   ~Vector();
 
+  unsigned int get_capacity();
+
   void insert(T value, unsigned int index);
   void insert(T *values, unsigned int size, unsigned int index);
   Result<T, VectorError> get(unsigned int index);
@@ -38,12 +40,16 @@ template <typename T> Vector<T>::Vector(unsigned int cap) {
   pointer = 0;
 }
 template <typename T> Vector<T>::Vector() {
-   capacity = 16;
-   data = (T *)calloc(capacity, sizeof(T)); 
-   pointer = 0;
+  capacity = 16;
+  data = (T *)calloc(capacity, sizeof(T));
+  pointer = 0;
 }
 
 template <typename T> Vector<T>::~Vector() { free(data); }
+
+template <typename T> unsigned int Vector<T>::get_capacity() {
+  return capacity;
+}
 
 template <typename T> void Vector<T>::insert(T value, unsigned int index) {
   if (index < capacity) {
@@ -88,21 +94,20 @@ template <typename T> void Vector<T>::clear() {
   }
 }
 template <typename T> void Vector<T>::resize(unsigned int size) {
-    capacity = size;
-    realloc(data, capacity);
+  capacity = size;
+  data = (T *)realloc(data, capacity);
 }
 
 template <typename T> void Vector<T>::push(T value) {
   if (pointer + 1 >= capacity) {
-    capacity *= 2;
-    realloc(data, capacity);
+    resize(capacity * 2);
   }
   data[pointer] = value;
   pointer++;
 }
 template <typename T> T Vector<T>::pop() {
   pointer--;
-  return data[pointer + 1];
+  return data[pointer];
 }
 
 template <typename T> void Vector<T>::print() {
