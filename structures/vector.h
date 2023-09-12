@@ -13,6 +13,7 @@ private:
   unsigned int pointer;
 
 public:
+  Vector(T* _data, unsigned int cap);
   Vector(unsigned int cap);
   Vector();
   ~Vector();
@@ -30,6 +31,8 @@ public:
 
   void push(T value);
   T pop();
+
+  bool contains(T value);
 
   void print();
 };

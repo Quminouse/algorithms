@@ -1,27 +1,27 @@
 #pragma once
-
+#include "../result/result.h"
 #include "vector.h"
-#include <stdlib.h>
+#include "linkedlist.h"
+
+enum HashMapError {
+  GET_ERROR = 1,
+};
 
 template <typename K, typename V> class HashMap {
 private:
-  V *data;
+  Vector<LinkedList<V>> data;
   unsigned int capacity;
 
 public:
   HashMap();
   ~HashMap();
 
-  unsigned int hash(K value);
-  unsigned int hash(K *value);
-};
+  static unsigned int hash_function(K value);
+  static unsigned int hash_function(K *value);
 
-template <typename K, typename V> HashMap<K, V>::HashMap() {
-  capacity = 16;
-  data = (V *)calloc(capacity, sizeof(V));
-}
-template <typename K, typename V> HashMap<K, V>::~HashMap() { free(data); }
+  void insert(K key, V value);
+  void insert(K *key, V value);
 
-template <typename K, typename V> unsigned int HashMap<K, V>::hash(K value) {
-  return (unsigned int)*value;
+  Result<V, HashMapError> get(K key);
+  Result<V, HashMapError> get(K *key);
 };

@@ -1,7 +1,8 @@
-#include "../structures/vector.cpp"
-#include "tools/test_assert.h"
+#include "../../structures/vector.cpp"
+#include "../tools/test_assert.cpp"
+#include <stdio.h>
 
-#define TEST_COUNT 5
+#define VECTOR_TEST_COUNT 5
 
 bool test_insert_get(int value, unsigned int index);
 bool test_push_pop(int value);
@@ -9,7 +10,7 @@ bool test_fill(int value);
 bool test_clear();
 bool test_resize(unsigned int capacity);
 
-bool test_vector() {
+unsigned int test_vector() {
   unsigned int pass_count = 0;
   printf("\n");
   printf("VECTOR TEST\n");
@@ -20,25 +21,22 @@ bool test_vector() {
   pass_count += test_clear();
   pass_count += test_resize(20);
   printf("------------------------------\n");
-  printf("TESTS PASSED: %d/%d\n", pass_count, TEST_COUNT);
+  printf("TESTS PASSED: %d/%d\n", pass_count, VECTOR_TEST_COUNT);
 
-  return pass_count == TEST_COUNT;
+  return VECTOR_TEST_COUNT - pass_count;
 }
 
 // Insert and retrive element from a vector
 bool test_insert_get(int value, unsigned int index) {
   auto vector = Vector<int>();
   vector.insert(value, index);
-  return test_assert(vector.get(index).unwrap() == value,
-                     "TEST FAILED: VECTOR/INSERT_GET",
-                     "TEST PASSED: VECTOR/INSERT_GET");
+  return test_assert(vector.get(index).unwrap() == value, "VECTOR/INSERT_GET");
 }
 
 bool test_push_pop(int value) {
   auto vector = Vector<int>();
   vector.push(value);
-  return test_assert(vector.pop() == value, "TEST FAILED: VECTOR/PUSH_POP",
-                     "TEST PASSED: VECTOR/PUSH_POP");
+  return test_assert(vector.pop() == value, "VECTOR/PUSH_POP");
 }
 
 bool test_fill(int value) {
@@ -51,8 +49,7 @@ bool test_fill(int value) {
       break;
     }
   }
-  return test_assert(pass, "TEST FAILED: VECTOR/FILL",
-                     "TEST PASSED: VECTOR/FILL");
+  return test_assert(pass, "VECTOR/FILL");
 }
 
 bool test_clear() {
@@ -66,14 +63,11 @@ bool test_clear() {
       break;
     }
   }
-  return test_assert(pass, "TEST FAILED: VECTOR/CLEAR",
-                     "TEST PASSED: VECTOR/CLEAR");
+  return test_assert(pass, "VECTOR/CLEAR");
 }
 
 bool test_resize(unsigned int capacity) {
   auto vector = Vector<int>();
   vector.resize(capacity);
-  return test_assert(vector.get_capacity() == capacity,
-                     "TEST FAILED: VECTOR/RESIZE",
-                     "TEST PASSED: VECTOR/RESIZE");
+  return test_assert(vector.get_capacity() == capacity, "VECTOR/RESIZE");
 }

@@ -12,6 +12,11 @@ template <typename T> Vector<T>::Vector() {
   data = (T *)calloc(capacity, sizeof(T));
   pointer = 0;
 }
+template <typename T> Vector<T>::Vector(T* _data, unsigned int size) {
+    capacity = size;
+    data = _data;
+    pointer = 0;
+}
 
 template <typename T> Vector<T>::~Vector() { free(data); }
 
@@ -76,6 +81,15 @@ template <typename T> void Vector<T>::push(T value) {
 template <typename T> T Vector<T>::pop() {
   pointer--;
   return data[pointer];
+}
+
+template <typename T> bool Vector<T>::contains(T value) {
+  for (int i = 0; i < capacity; ++i) {
+    if (data[i] == value) {
+      return true;
+    }
+  }
+  return false;
 }
 
 template <typename T> void Vector<T>::print() {
