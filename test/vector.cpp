@@ -1,5 +1,5 @@
-#include "../vector.cpp"
-#include "test_assert.cpp"
+#include "../structures/vector.cpp"
+#include "tools/test_assert.h"
 
 #define TEST_COUNT 5
 
